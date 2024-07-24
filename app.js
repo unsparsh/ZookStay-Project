@@ -36,7 +36,6 @@ main().then(()=>{
 //update route
 app.put("/listings/:id" , async (req,res)=>{
     let {id} = req.params;
-    // console.log(...req.body.listing);
     await Listing.findByIdAndUpdate(id , {...req.body.listing});
     res.redirect(`/listings/${id}`);
 });
@@ -45,7 +44,7 @@ app.put("/listings/:id" , async (req,res)=>{
 app.delete("/listings/:id" ,async (req,res)=>{
     let {id} = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
-    console.log(deletedListing);
+    console.log(`Deleted File with id: ${id}`);
     res.redirect("/listings");
 });
 

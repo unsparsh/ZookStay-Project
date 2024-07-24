@@ -55,7 +55,7 @@
             <form action="/listings/<%= listing._id %>?_method=PUT" method="post">
                 <input type="text" name="listing[title]" value="<%= listing.title %>" required>
                 <textarea name="listing[description]" required><%= listing.description %></textarea>
-                <input type="text" name="listing[image]" value="<%= listing.image.url %>" required>
+                <input type="text" name="listing[image]" value="<%= listing.image %>" required>
                 <input type="number" name="listing[price]" value="<%= listing.price %>" required>
                 <input type="text" name="listing[location]" value="<%= listing.location %>" required>
                 <input type="text" name="listing[country]" value="<%= listing.country %>" required>
