@@ -36,6 +36,7 @@ main().then(()=>{
 //update route
 app.put("/listings/:id" , async (req,res)=>{
     let {id} = req.params;
+    // console.log(...req.body.listing);
     await Listing.findByIdAndUpdate(id , {...req.body.listing});
     res.redirect(`/listings/${id}`);
 });
