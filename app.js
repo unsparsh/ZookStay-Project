@@ -91,10 +91,11 @@ app.get("/listings/:id/edit" , async(req,res)=>{
 
 //privacy route
 app.get("/privacy" , (req,res)=>{
-    res.render("/footer/privacy.ejs");
+    res.render("footer/privacy.ejs");
 });
 
 //terms route
 app.get("/terms" , (req,res)=>{
-    res.render("/footer/terms.ejs");
+    res.render("footer/terms.ejs");
+
 });
