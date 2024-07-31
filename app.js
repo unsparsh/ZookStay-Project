@@ -5,6 +5,8 @@ const Listing = require("./models/listing");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
+const wrapAsync = require("./utils/wrapAsync");
+const ExpressError = require("./utils/ExpressError");
 
 
 app.set("view engine" , "ejs");
@@ -13,6 +15,9 @@ app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
 app.engine("ejs" , ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
+
+
+
 
 app.listen(8080,()=>{
     console.log("Server is running at 8080");
@@ -76,11 +81,13 @@ app.get("/listings/:id" , async (req,res)=>{
 });
 
 //post route for new form
-app.post("/listings" , async (req,res)=>{
+app.post("/listings" ,
+    wrapAsync( async (req,res)=>{
    const newListing =  new Listing(req.body.listing);
    await newListing.save();
    res.redirect("/listings");
-});
+})
+);
 
 //edit route
 app.get("/listings/:id/edit" , async(req,res)=>{
@@ -98,4 +105,14 @@ app.get("/privacy" , (req,res)=>{
 app.get("/terms" , (req,res)=>{
     res.render("footer/terms.ejs");
 
+});
+
+app.all("*" , (req,res,next) =>{
+    next(new ExpressError(404 , "Page not Found!"));
+} );
+
+app.use((err,req,res,next) => {
+    let {statusCode , message} = err;
+    // res.status(statusCode).send(message);
+    res.render("error/errorpage.ejs");
 });
