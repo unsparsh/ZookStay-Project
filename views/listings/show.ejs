@@ -4,14 +4,13 @@
 <body>
     <div class="container">
         <div class="details-container">
-            <h3>Listing Details:</h3>
+            <h3><%= listing.title %></h3>
 
             <div class="card">
                     <img src="<%= listing.image %>" class="card-img-top" alt="Location_Image" style="height: 15rem">
               </div>
 
             <ul>
-                <li><strong>Title:</strong> <%= listing.title %></li>
                 <li><strong>Description:</strong> <%= listing.description %></li>
                 <li><strong>Price:</strong> &#8377 <%= listing.price.toLocaleString("en-IN") %></li>
                 <li><strong>Location:</strong> <%= listing.location %></li>
@@ -22,5 +21,170 @@
                 <button type="submit" class="btn btn-danger">Delete this Listing</button>
             </form>
         </div>
+        <hr>
+        <div class="review-container">
+            <h4>Leave a Review</h4>
+            <form action="">
+                <div class="form-group">
+                    <label for="rating">Rating:</label>
+                    <input type="range" min="1" max="5" id="rating" name="review[rating]" class="styled-range">
+                </div>
+                <div class="form-group">
+                    <label for="comments">Comments Here:</label>
+                    <textarea name="review[comments]" id="comment" cols="30" rows="5"></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Submit</button>
+            </form>
+        </div>
+        <style>
+            .review-container {
+                background-color: white;
+                padding: 15px;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                max-width: 600px;
+                width: 100%;
+                margin: 20px auto;
+            }
+        
+            h4 {
+                color: #fe424d;
+                text-align: center;
+            }
+        
+            form {
+                display: flex;
+                flex-direction: column;
+            }
+        
+            .form-group {
+                margin-bottom: 15px;
+            }
+        
+            label {
+                margin-bottom: 5px;
+                font-weight: bold;
+                color: #333;
+            }
+        
+            textarea {
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 14px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+        
+            textarea:focus {
+                outline: none;
+                border-color: #fe424d;
+                box-shadow: 0 0 4px #fe424d;
+            }
+        
+            input[type=range] {
+  -webkit-appearance: none;
+  margin: 18px 0;
+  width: 100%;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #3071a9;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -14px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #367ebd;
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: #3071a9;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  border-width: 16px 0;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: #2a6495;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range]::-ms-fill-upper {
+  background: #3071a9;
+  border: 0.2px solid #010101;
+  border-radius: 2.6px;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+}
+input[type=range]::-ms-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: #3071a9;
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: #367ebd;
+}
+        
+            .btn-submit {
+                background-color: #fe424d;
+                color: white;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+                font-size: 14px;
+                align-self: center;
+                width: 120px;
+            }
+        
+            .btn-submit:hover {
+                background-color: #d43a42;
+            }
+        </style>
+ 
     </div>
 </body>
