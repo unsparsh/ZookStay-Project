@@ -24,19 +24,56 @@
         <hr>
         <div class="review-container">
             <h4>Leave a Review</h4>
-            <form action="">
+            <form action="/listings/<%= listing._id %>/reviews" method="POST">
                 <div class="form-group">
                     <label for="rating">Rating:</label>
-                    <input type="range" min="1" max="5" id="rating" name="review[rating]" class="styled-range">
+                    <input type="range" min="1" max="5" id="rating" name="rating" class="styled-range" value="3">
                 </div>
                 <div class="form-group">
-                    <label for="comments">Comments Here:</label>
-                    <textarea name="review[comments]" id="comment" cols="30" rows="5"></textarea>
+                    <label for="Comment">Comments Here:</label>
+                    <textarea name="Comment" id="comment" cols="30" rows="5" required placeholder="Your Feedback Matters.."></textarea>
                 </div>
                 <button type="submit" class="btn-submit">Submit</button>
             </form>
         </div>
+        <hr/>
+
+     
+
+        <p><b>All Reviews</b></p>
+        <div class="row review-box">
+        <% for(review of listing.reviews) { %>
+            <div class="review-cards card col-3"> 
+                <div class="card-body">
+                    <h5 class="card-title">Jane Doe</h5>
+                    <p class="card-text"><%= review.Comment %></p>
+                    <p class="card-text"><%= review.rating %> star</p>
+                </div>
+                <form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="post">
+                    <button class="btn btn-sm btn-danger white" type="submit">Delete</button>
+                </form>
+            </div>
+        <% } %> 
+    </div>
+
+<!-- styling for the review and all reviews portion of the page -->
         <style>
+              textarea::placeholder {
+        color: #999; /* Placeholder text color */
+        font-style: italic; /* Placeholder text style */
+    }
+
+            .review-cards{
+                border: 1px soild rgb(0, 0, 0) !important;
+                /* background-color: red; */
+                padding: 15px;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                margin: 20px;
+            }
+            .review-box{
+                margin-left: 100px;
+            }
             .review-container {
                 background-color: white;
                 padding: 15px;
@@ -81,92 +118,40 @@
                 border-color: #fe424d;
                 box-shadow: 0 0 4px #fe424d;
             }
-        
-            input[type=range] {
-  -webkit-appearance: none;
-  margin: 18px 0;
-  width: 100%;
-}
-input[type=range]:focus {
-  outline: none;
-}
-input[type=range]::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 8.4px;
-  cursor: pointer;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  background: #3071a9;
-  border-radius: 1.3px;
-  border: 0.2px solid #010101;
-}
-input[type=range]::-webkit-slider-thumb {
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  border: 1px solid #000000;
-  height: 36px;
-  width: 16px;
-  border-radius: 3px;
-  background: #ffffff;
-  cursor: pointer;
-  -webkit-appearance: none;
-  margin-top: -14px;
-}
-input[type=range]:focus::-webkit-slider-runnable-track {
-  background: #367ebd;
-}
-input[type=range]::-moz-range-track {
-  width: 100%;
-  height: 8.4px;
-  cursor: pointer;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  background: #3071a9;
-  border-radius: 1.3px;
-  border: 0.2px solid #010101;
-}
-input[type=range]::-moz-range-thumb {
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  border: 1px solid #000000;
-  height: 36px;
-  width: 16px;
-  border-radius: 3px;
-  background: #ffffff;
-  cursor: pointer;
-}
-input[type=range]::-ms-track {
-  width: 100%;
-  height: 8.4px;
-  cursor: pointer;
-  background: transparent;
-  border-color: transparent;
-  border-width: 16px 0;
-  color: transparent;
-}
-input[type=range]::-ms-fill-lower {
-  background: #2a6495;
-  border: 0.2px solid #010101;
-  border-radius: 2.6px;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-}
-input[type=range]::-ms-fill-upper {
-  background: #3071a9;
-  border: 0.2px solid #010101;
-  border-radius: 2.6px;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-}
-input[type=range]::-ms-thumb {
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  border: 1px solid #000000;
-  height: 36px;
-  width: 16px;
-  border-radius: 3px;
-  background: #ffffff;
-  cursor: pointer;
-}
-input[type=range]:focus::-ms-fill-lower {
-  background: #3071a9;
-}
-input[type=range]:focus::-ms-fill-upper {
-  background: #367ebd;
-}
+            
+            .styled-range {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 8px;
+        border-radius: 5px;
+        background: #ddd;
+        outline: none;
+        opacity: 0.7;
+        transition: opacity .2s;
+    }
+
+    .styled-range:hover {
+        opacity: 1;
+    }
+
+    .styled-range::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #fe424d;
+        cursor: pointer;
+    }
+
+    .styled-range::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #fe424d;
+        cursor: pointer;
+    }
+
         
             .btn-submit {
                 background-color: #fe424d;
