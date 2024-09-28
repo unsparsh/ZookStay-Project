@@ -9,22 +9,68 @@ const wrapAsync = require("./utils/wrapAsync");
 const ExpressError = require("./utils/ExpressError");
 const Review = require('./models/reviews'); // Path to your review model
 const { reviewSchema } = require("./schema.js");
+const session = require('express-session');
+const flash = require("connect-flash");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js");
+const passport = require("passport");
+
+const userRouter = require("./routes/user.js");
+app.use("/", userRouter);
 
 app.set("view engine" , "ejs");
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({extended:true}));
+app.use(express.json()); 
 app.use(methodOverride("_method"));
 app.engine("ejs" , ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
+const sessionOptions = {
+    secret : "hetal",
+    resave : false,
+    saveUninitialised : true,
+    cookie:{
+        expires : Date.now() + 7 * 24 * 60 * 60 * 1000,
+        maxAge :  7 * 24 * 60 * 60 * 1000,
+        httpOnly : true,
+    }
+};
+
+app.get("/" , (req,res)=>{
+    res.render("home.ejs");
+});
+
+app.use(session(sessionOptions));
+app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use((req, res, next) => {
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    next();
+});
+
+// app.get("/demouser",async(req,res)=>{
+//     let fakeUser = new User({
+//         email:"student@gmail.com",
+//         username:"student1"
+//     });
+//    let registeredUser =  await User.register(fakeUser , "Chinsa@123"); //using regiter method to enter fake user in user database
+//    res.send(registeredUser); 
+// });
 
 app.listen(8080,()=>{
     console.log("Server is running at 8080 at :- "+ " http://localhost:8080/");
 });
 
-app.get("/" , (req,res)=>{
-    res.render("home.ejs");
-});
+
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/zookstay";
 async function main(){
@@ -84,6 +130,7 @@ app.post("/listings" ,
     wrapAsync( async (req,res)=>{
    const newListing =  new Listing(req.body.listing);
    await newListing.save();
+   req.flash("success","New Listing Created!");
    res.redirect("/listings");
 })
 );

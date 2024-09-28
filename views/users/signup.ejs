@@ -1,0 +1,66 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+<head>
+    <style>
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            margin: 20px auto;
+        }
+
+        h3 {
+            color: #fe424d;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input, button {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #fe424d;
+            box-shadow: 0 0 4px #fe424d;
+        }
+
+        button {
+            background-color: #fe424d;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #d43a42;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h3>Sign Up</h3>
+            <form action="/signup" method="post">
+                <input type="text" name="user[username]" placeholder="Enter Username" required>
+                <input type="email" name="user[email]" placeholder="Enter Email" required>
+                <input type="password" name="user[password]" placeholder="Enter Password" required>
+                <input type="password" name="user[confirmPassword]" placeholder="Confirm Password" required>
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+</body>

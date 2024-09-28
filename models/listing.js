@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const reviews = require("./reviews");
+const Review = require("./reviews"); // Corrected the variable name to match the model
 const Schema = mongoose.Schema;
 
 const listingSchema = new Schema({
@@ -8,29 +8,23 @@ const listingSchema = new Schema({
     required: true,
   },
   description: String,
-
-  // image:{
-  //   filename : {type:String},
-  //   url : {type:String}
-  // },
   image: String,
-
   price: Number,
   location: String,
   country: String,
-  reviews : [
+  reviews: [
     {
       type: Schema.Types.ObjectId,
-      ref : "Review",
+      ref: "Review",
     },
-  ]
+  ],
 });
 
-listingSchema.post("findOneAndDelete" , async (listing) =>{
-  if(listing){
-    await Review.deleteMany({_id: {$in : listing.reviews}});
+listingSchema.post("findOneAndDelete", async (listing) => {
+  if (listing) {
+    await Review.deleteMany({ _id: { $in: listing.reviews } });
   }
-})
+});
 
 const Listing = mongoose.model("Listing", listingSchema);
 module.exports = Listing;
