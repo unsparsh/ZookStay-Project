@@ -54,13 +54,21 @@
     <div class="container">
         <div class="form-container">
             <h3>Sign Up</h3>
-            <form action="/signup" method="post">
-                <input type="text" name="user[username]" placeholder="Enter Username" required>
-                <input type="email" name="user[email]" placeholder="Enter Email" required>
-                <input type="password" name="user[password]" placeholder="Enter Password" required>
-                <input type="password" name="user[confirmPassword]" placeholder="Confirm Password" required>
+            <form action="/signup" method="POST">
+                <input type="text" name="username" placeholder="Enter Username" required>
+                <input type="email" name="email" placeholder="Enter Email" required>
+                <input type="password" name="password" placeholder="Enter Password" required>
+                <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
                 <button type="submit">Sign Up</button>
             </form>
+            <% if (success) { %>
+                <div class="alert alert-success"><%= success %></div>
+            <% } %>
+            
+            <% if (error) { %>
+                <div class="alert alert-danger"><%= error %></div>
+            <% } %>
+            
         </div>
     </div>
 </body>

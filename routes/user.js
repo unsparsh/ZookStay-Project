@@ -13,7 +13,7 @@ router.post("/signup", async (req, res) => {
 
         if (password !== confirmPassword) {
             req.flash("error", "Passwords do not match.");
-            return res.redirect("/signup");
+            return res.redirect("/listings");
         }
 
         const newUser = new User({ email, username });
@@ -23,9 +23,11 @@ router.post("/signup", async (req, res) => {
        req.flash("success", "Welcome to ZookStay");
         res.redirect("/listings");
     } catch (e) {
+        console.error("Error during registration:", e); // Add more logging for debugging
         req.flash("error", e.message);
         res.redirect("/signup");
     }
+    
 });
 
 
